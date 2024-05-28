@@ -79,8 +79,6 @@ int main() {
 	Triangle T2{ Point2D{ui(mt),ui(mt)} , Point2D{ ui(mt),ui(mt) }, Point2D{ ui(mt),ui(mt) } };
 
 	for (int i = 0; i < 16; i++) {
-
-
 		ClearShow();
 		std::this_thread::sleep_for(std::chrono::seconds(2));
 		WriteTriangle(T2, 'X');
