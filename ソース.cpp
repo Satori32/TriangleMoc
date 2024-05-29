@@ -57,7 +57,7 @@ bool WriteTriangle(Triangle X, char Color) {
 	double BB = X[2].X - X[1].X;
 	double BBB = BB / Z;
 	for (std::intmax_t j=0; j <= Z; j++) {
-		WriteLine(X[1].X+(BBB*i), Center + (C * i+j), i+j, 'B');
+		WriteLine(X[1].X+(BBB*j), Center + (C * i+j), i+j, 'B');
 
 	}
 
