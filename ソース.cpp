@@ -8,6 +8,9 @@
 
 #include "EscapeSequence.h"
 
+//i cant write only triangle... fuck.
+
+
 struct Point2D;
 typedef std::array<Point2D, 3> Triangle;
 
@@ -51,8 +54,10 @@ bool WriteTriangle(Triangle X, char Color) {
 
 	} 
 	double Z = (DeltaC - DeltaA);
+	double BB = X[2].X - X[1].X;
+	double BBB = BB / Z;
 	for (std::intmax_t j=0; j <= Z; j++) {
-		WriteLine(Center-Center+j*Z, Center + (C * i+j), i+j, 'A');
+		WriteLine(X[1].X+(BBB*i), Center + (C * i+j), i+j, 'B');
 
 	}
 
@@ -73,10 +78,11 @@ int main() {
 	Point2D C{ 32,16 };
 
 	WriteTriangle(T, 'A');
-
+	/** /
 	std::mt19937 mt(1);
 	std::uniform_int_distribution<uintmax_t> ui(21, 21);
 	Triangle T2{ Point2D{ui(mt),ui(mt)} , Point2D{ ui(mt),ui(mt) }, Point2D{ ui(mt),ui(mt) } };
+
 
 	for (int i = 0; i < 16; i++) {
 		ClearShow();
@@ -84,6 +90,7 @@ int main() {
 		WriteTriangle(T2, 'X');
 
 	}
+	/**/
 	return 0;
 
 
