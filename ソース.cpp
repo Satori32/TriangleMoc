@@ -25,9 +25,11 @@ struct Point2D {
 };
 
 bool WriteLine(double X1, double X2,double Y, char Color) {
-	if (X1 > X2) { std::swap(X1, X2); }
+	if (X1 < X2) { std::swap(X1, X2); }
 
-	for (std::intmax_t i = 0; i < X2-X1; i++) {
+	double A = X2 - X1;
+
+	for (std::intmax_t i = 0; i < A; i++) {
 		Locate(X1+i,Y); std::cout << Color;
 	}
 	return true;
@@ -76,6 +78,8 @@ int main() {
 	Point2D A{ 16,1 };
 	Point2D B{ 1,16 };
 	Point2D C{ 32,16 };
+
+	double Q = 0xdeadbeef;
 
 	WriteTriangle(T, 'A');
 	/** /
