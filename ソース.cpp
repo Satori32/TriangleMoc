@@ -19,13 +19,13 @@ using namespace ESS;
 struct Point2D {
 	//double X = 0;
 	//double Y = 0;
-	std::uintmax_t X = 0;
-	std::uintmax_t Y = 0;
+	std::intmax_t X = 0;
+	std::intmax_t Y = 0;
 
 };
 
 bool WriteLine(double X1, double X2,double Y, char Color) {
-	if (X1 < X2) { std::swap(X1, X2); }
+	if (X1 > X2) { std::swap(X1, X2); }
 
 	double A = X2 - X1;
 
@@ -34,8 +34,45 @@ bool WriteLine(double X1, double X2,double Y, char Color) {
 	}
 	return true;
 }
+/**/
+bool WriteTriangle(Triangle X, char Color) {
+	//std::sort(X.begin(), X.end(), [](auto& A, auto& B) {return A.X > B.X; });
+	std::sort(X.begin(), X.end(), [](auto& A, auto& B) {return A.Y < B.Y; });
+
+	Locate(X[0].X, X[0].Y); std::cout << Color;
+	Locate(X[1].X, X[1].Y); std::cout << (char)(Color+1);
+	Locate(X[2].X, X[2].Y); std::cout << (char)(Color+2);
 
 
+	double Center = X[0].X;
+	double DeltaAB = X[1].Y - X[0].Y;
+	double DeltaAC = X[2].Y - X[0].Y;
+	double L = (std::max)(DeltaAB, DeltaAC);
+	double L2 = (std::min)(DeltaAB, DeltaAC);
+	double XM = (std::min)(X[1].X, X[2].X);
+	double B = L / DeltaAB;
+	double C = L / DeltaAC;
+	std::intmax_t i=0;
+	double YM = L2;
+	for (i = 1; i <= L2; i++) {
+		WriteLine(Center - (B * i), Center + (C * i), i+X[0].Y, 'A');
+
+	} 
+	double Z = (DeltaAC - DeltaAB);
+
+	for (double j = 0; j < Z; j += 1) {
+		if (X[1].Y < X[2].Y) {
+			WriteLine(X[1].X + (X[2].X - X[1].X) / Z * j, Center + (C * (i + j)), j + i + X[0].Y, 'B');
+		}
+		else {
+			WriteLine(Center + (C * (j + i)), (X[2].X - X[1].X) / Z * j, j + i + X[0].Y, 'C');
+		}
+	}
+
+	return true;
+}
+/**/
+/** /
 bool WriteTriangle(Triangle X, char Color) {
 	std::sort(X.begin(), X.end(), [](auto& A, auto& B) {return A.X > B.X; });
 	std::sort(X.begin(), X.end(), [](auto& A, auto& B) {return A.Y < B.Y; });
@@ -65,6 +102,7 @@ bool WriteTriangle(Triangle X, char Color) {
 
 	return true;
 }
+/**/
 
 bool WriteTriangle(Point2D A, Point2D B, Point2D C, char Color) {
 	return WriteTriangle({A,B,C},Color);
@@ -82,16 +120,15 @@ int main() {
 	double Q = 0xdeadbeef;
 
 	WriteTriangle(T, 'A');
-	/** /
-	std::mt19937 mt(1);
-	std::uniform_int_distribution<uintmax_t> ui(21, 21);
-	Triangle T2{ Point2D{ui(mt),ui(mt)} , Point2D{ ui(mt),ui(mt) }, Point2D{ ui(mt),ui(mt) } };
-
+	/**/
+	std::mt19937 mt(1); 
+	std::uniform_int_distribution<intmax_t> ui(0, 21);
 
 	for (int i = 0; i < 16; i++) {
-		ClearShow();
 		std::this_thread::sleep_for(std::chrono::seconds(2));
-		WriteTriangle(T2, 'X');
+		ClearShow();
+		Triangle T2{ Point2D{ui(mt),ui(mt)} , Point2D{ ui(mt),ui(mt) }, Point2D{ ui(mt),ui(mt) } };
+		WriteTriangle(T2, 'Q');
 
 	}
 	/**/
